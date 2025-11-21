@@ -42,16 +42,13 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script type="module">
-    import { initSupabase, loadProjects } from './assets/js/main.js';
-    const SUPABASE_URL = 'REPLACE_WITH_YOUR_SUPABASE_URL';
-    const SUPABASE_ANON_KEY = 'REPLACE_WITH_YOUR_SUPABASE_ANON_KEY';
-    const supabase = initSupabase(SUPABASE_URL, SUPABASE_ANON_KEY);
-    // on load
-    document.addEventListener('DOMContentLoaded', async () => {
-      await loadProjects(supabase, document.getElementById('projects-grid'));
-    });
-  </script>
+import { loadProjects } from '/assets/js/main.js'
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadProjects(document.getElementById('projects-grid'))
+})
+</script>
+
 </body>
 </html>

@@ -82,30 +82,6 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script type="module">
-    import { initSupabase, submitContact } from './assets/js/main.js';
-    const SUPABASE_URL = 'REPLACE_WITH_YOUR_SUPABASE_URL';
-    const SUPABASE_ANON_KEY = 'REPLACE_WITH_YOUR_SUPABASE_ANON_KEY';
-    const supabase = initSupabase(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const f = document.getElementById('contactForm');
-      const msg = document.getElementById('contactMsg');
-      f.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        msg.textContent = 'Sending...';
-        const data = Object.fromEntries(new FormData(f).entries());
-        const res = await submitContact(supabase, data);
-        if (res.error) {
-          msg.textContent = 'There was an error. Please try again.';
-          console.error(res.error);
-        } else {
-          msg.textContent = 'Message sent. Thank you!';
-          f.reset();
-        }
-      });
-    });
-  </script>
+  <script src="assets/js/main.js" type="module"></script>
 </body>
 </html>
