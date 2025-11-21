@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact — Pavillah Agricultural Services</title>
+  <meta name="description" content="Contact Pavillah Agricultural Services" />
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <img src="assets/images/pavilah.svg" alt="logo" width="48" height="48">
+        <span>Pavillah Agricultural Services</span>
+      </a>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html" class="active">Contact</a>
+      </nav>
+      <button class="nav-toggle" aria-label="open menu"><span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span></button>
+    </div>
+  </header>
+
+  <main class="container content">
+    <h1>Contact</h1>
+    <section class="contact-cards fade-up">
+      <div>
+        <h3>Phone</h3>
+        <p><a href="tel:+2348076067018">08076067018</a></p>
+      </div>
+      <div>
+        <h3>WhatsApp</h3>
+        <p><a href="https://wa.me/2348076067018" target="_blank" rel="noopener">Chat on WhatsApp</a></p>
+      </div>
+      <div>
+        <h3>Email</h3>
+        <p><a href="mailto:Paviilahagric@gmail.com">Paviilahagric@gmail.com</a></p>
+      </div>
+      <div>
+        <h3>Address</h3>
+        <p>No. 8 Railway Bye Pass, High Level</p>
+      </div>
+    </section>
+
+    <section class="contact-form fade-up delay-1">
+      <h2>Send us a message</h2>
+      <form id="contactForm">
+        <label>
+          Name
+          <input name="name" required />
+        </label>
+        <label>
+          Email
+          <input name="email" type="email" required />
+        </label>
+        <label>
+          Phone
+          <input name="phone" />
+        </label>
+        <label>
+          Message
+          <textarea name="message" rows="4" required></textarea>
+        </label>
+        <div>
+          <button type="submit" class="btn">Send</button>
+        </div>
+        <p id="contactMsg" class="muted"></p>
+      </form>
+      <p class="muted">You can also reach us on WhatsApp or by phone.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>©2025<a href="https://www.kdevglobal.com/"><strong>Built By KD Global</strong></a></small>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script type="module">
+    import { initSupabase, submitContact } from './assets/js/main.js';
+    const SUPABASE_URL = 'REPLACE_WITH_YOUR_SUPABASE_URL';
+    const SUPABASE_ANON_KEY = 'REPLACE_WITH_YOUR_SUPABASE_ANON_KEY';
+    const supabase = initSupabase(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const f = document.getElementById('contactForm');
+      const msg = document.getElementById('contactMsg');
+      f.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        msg.textContent = 'Sending...';
+        const data = Object.fromEntries(new FormData(f).entries());
+        const res = await submitContact(supabase, data);
+        if (res.error) {
+          msg.textContent = 'There was an error. Please try again.';
+          console.error(res.error);
+        } else {
+          msg.textContent = 'Message sent. Thank you!';
+          f.reset();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
