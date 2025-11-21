@@ -1,4 +1,4 @@
-import { createClient } from "https://esm.sh/@sanity/client";
+import { createClient } from "@sanity/client";
 
 // Sanity client
 export const sanityClient = createClient({
@@ -6,6 +6,8 @@ export const sanityClient = createClient({
   dataset: 'production',
   useCdn: true, // false if you want freshest data
   apiVersion: '2025-11-21',
+  token: undefined,    // don't include token for public read
+  ignoreBrowserTokenWarning: true, 
 })
 
 // Escape helper
