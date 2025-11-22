@@ -48,13 +48,20 @@ export async function loadProjects(containerEl) {
 
       const imgUrl = p.images && p.images.length ? p.images[0] : null
 
-      let videoHtml = ''
+      let videoHtml = '';
       if (p.videos && p.videos.length) {
-        videoHtml = '<div class="muted">Video links available</div>'
+        videoHtml = `
+    <div class="video-links">
+      ${p.videos
+            .map(v => `<a href="${v}" target="_blank" rel="noopener">Watch Video</a>`)
+            .join('<br>')}
+    </div>
+  `;
       }
 
+
       card.innerHTML = `
-        ${imgUrl 
+        ${imgUrl
           ? `<img loading="lazy" class="project-thumb" src="${imgUrl}" alt="${escapeHtml(p.title)}" />`
           : `<div style="height:160px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;color:#9ca3af">No image</div>`}
         <div class="project-body">

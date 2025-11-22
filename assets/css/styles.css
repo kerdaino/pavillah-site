@@ -408,3 +408,13 @@ select {
 .hidden {
   display: none;
 }
+
+.video-links a {
+  color: var(--green);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.video-links a:hover {
+  color: var(--orange);
+}
