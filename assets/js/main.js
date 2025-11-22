@@ -2,13 +2,13 @@ import { createClient } from "@sanity/client";
 
 // Sanity client
 export const sanityClient = createClient({
-  projectId: 'qgwf914m', // replace with your projectId
+  projectId: 'tr7gpebz',
   dataset: 'production',
-  useCdn: true, // false if you want freshest data
+  useCdn: true,
   apiVersion: '2025-11-21',
-  token: undefined,    // don't include token for public read
-  ignoreBrowserTokenWarning: true, 
+  ignoreBrowserTokenWarning: true,
 })
+
 
 // Escape helper
 function escapeHtml(str) {
