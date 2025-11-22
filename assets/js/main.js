@@ -1,6 +1,5 @@
 import { createClient } from "https://esm.sh/@sanity/client?target=es2020";
 
-
 // Sanity client
 export const sanityClient = createClient({
   projectId: 'tr7gpebz',
@@ -9,7 +8,6 @@ export const sanityClient = createClient({
   apiVersion: '2025-11-21',
   ignoreBrowserTokenWarning: true,
 })
-
 
 // Escape helper
 function escapeHtml(str) {
@@ -20,6 +18,17 @@ function escapeHtml(str) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;')
+}
+
+// ⭐ NEW: Make URLs clickable inside description
+function linkify(text) {
+  if (!text) return '';
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+  // Escape normal text, then convert URLs to links
+  return escapeHtml(text).replace(urlRegex, (url) => {
+    return `<a href="${url}" target="_blank" class="post-link">${url}</a>`;
+  });
 }
 
 // Load projects
@@ -48,30 +57,32 @@ export async function loadProjects(containerEl) {
 
       const imgUrl = p.images && p.images.length ? p.images[0] : null
 
+      // VIDEO LINKS SECTION
       let videoHtml = '';
       if (p.videos && p.videos.length) {
         videoHtml = `
-    <div class="video-links">
-      ${p.videos
-            .map(v => `<a href="${v}" target="_blank" rel="noopener">Watch Video</a>`)
-            .join('<br>')}
-    </div>
-  `;
+          <div class="video-links">
+            ${p.videos
+              .map(v => `<a href="${v}" target="_blank" rel="noopener">Watch Video</a>`)
+              .join('<br>')}
+          </div>
+        `;
       }
 
-
+      // Card markup with UPDATED DESCRIPTION LINKIFY
       card.innerHTML = `
         ${imgUrl
           ? `<img loading="lazy" class="project-thumb" src="${imgUrl}" alt="${escapeHtml(p.title)}" />`
           : `<div style="height:160px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;color:#9ca3af">No image</div>`}
+        
         <div class="project-body">
           <h4>${escapeHtml(p.title)}</h4>
-          <p>${escapeHtml(p.description || '')}</p>
+          <p>${linkify(p.description || '')}</p>
           ${videoHtml}
         </div>
       `
       containerEl.appendChild(card)
-    })
+    });
 
   } catch (err) {
     console.error(err)
