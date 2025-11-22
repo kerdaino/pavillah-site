@@ -1,4 +1,5 @@
-import { createClient } from "@sanity/client";
+import { createClient } from "https://esm.sh/@sanity/client?target=es2020";
+
 
 // Sanity client
 export const sanityClient = createClient({
