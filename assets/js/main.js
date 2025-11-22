@@ -115,3 +115,40 @@ document.addEventListener("DOMContentLoaded", () => {
     toggle.classList.remove("open");
   });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("contactForm");
+  const msgBox = document.getElementById("contactMsg");
+
+  if (!form) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    msgBox.textContent = "Sending…";
+
+    const formData = {
+      name: form.name.value,
+      email: form.email.value,
+      phone: form.phone.value,
+      message: form.message.value
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+
+      if (res.ok) {
+        msgBox.textContent = "Message sent successfully!";
+        form.reset();
+      } else {
+        msgBox.textContent = "Error sending message. Try again.";
+      }
+    } catch (err) {
+      console.error(err);
+      msgBox.textContent = "Network error. Try again.";
+    }
+  });
+});
